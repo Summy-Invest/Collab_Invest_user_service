@@ -4,6 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Message(
-    val obj: String,
-    val notation: String
+    val message: String
 )
