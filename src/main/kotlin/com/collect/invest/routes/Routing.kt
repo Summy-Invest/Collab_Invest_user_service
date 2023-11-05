@@ -18,19 +18,19 @@ fun Application.configureRouting() {
         post("/createUser") {
             val user = call.receive<User>()
             if (!emailValid.validate(user.email)) {
-                call.respondText(text = Json.encodeToString(Message("message", "Incorrect email")),
+                call.respondText(text = Json.encodeToString(Message("Incorrect email")),
                     contentType = ContentType.Application.Json,
                     status = HttpStatusCode.BadRequest
                 )
             }
             else if (!passwordValid.validate(user.password)) {
-                call.respondText(text = Json.encodeToString(Message("message", "Incorrect password")),
+                call.respondText(text = Json.encodeToString(Message("Incorrect password")),
                     contentType = ContentType.Application.Json,
                     status = HttpStatusCode.BadRequest
                 )
             }
             else {
-                call.respondText(text = Json.encodeToString(Message("message", "User is signed up")),
+                call.respondText(text = Json.encodeToString(Message("User is signed up")),
                     contentType = ContentType.Application.Json,
                     status = HttpStatusCode.OK
                 )
