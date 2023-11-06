@@ -15,7 +15,7 @@ fun Application.configureRouting() {
     val passwordValid = PasswordValidator()
 
     routing {
-        post("/createUser") {
+        post("/signUp") {
             val user = call.receive<User>()
             if (!emailValid.validate(user.email)) {
                 call.respondText(text = Json.encodeToString(Message("Incorrect email")),
@@ -35,6 +35,10 @@ fun Application.configureRouting() {
                     status = HttpStatusCode.OK
                 )
             }
+        }
+        post("/logIn") {
+            val account = call.receive<Account>()
+
         }
     }
 }
