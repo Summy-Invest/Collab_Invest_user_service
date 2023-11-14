@@ -1,5 +1,6 @@
 package com.collect.invest.routes
 
+import com.collect.invest.controllers.LogInController
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -13,6 +14,7 @@ import kotlinx.serialization.json.Json
 fun Application.configureRouting() {
     val emailValid = EmailValidator()
     val passwordValid = PasswordValidator()
+    val logInController = LogInController()
 
     routing {
         post("/signUp") {
@@ -36,9 +38,12 @@ fun Application.configureRouting() {
                 )
             }
         }
-        post("/logIn") {
-            val account = call.receive<Account>()
-
+        get("/logIn/{email}/{password}") {
+            val email = call.parameters["email"]!!
+            val password = call.parameters["password"]!!
+            val account = Account(email = email, password = password)
+            val response = logInController.accountExists(account, "http://localhost:8080/userService/user/authenticateUser")
+            call.respond(response.status)
         }
     }
 }

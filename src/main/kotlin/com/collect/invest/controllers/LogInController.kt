@@ -9,13 +9,13 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.statement.HttpResponse
 
-class logInConroller {
+class LogInController {
     private val client = HttpClient(CIO){
         install(ContentNegotiation) {
             json(contentType = ContentType.Any)
         }
     }
-    suspend fun accountExists(account: Account, url: String){
-        val response: HttpResponse = client.get(url + "/${account.email}/${account.password}")
+    suspend fun accountExists(account: Account, url: String): HttpResponse {
+        return client.get(url + "/${account.email}/${account.password}")
     }
 }
