@@ -10,11 +10,9 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.statement.HttpResponse
 
 class logInConroller {
-    companion object{
-        val client = HttpClient(CIO){
-            install(ContentNegotiation) {
-                json(contentType = ContentType.Any)
-            }
+    private val client = HttpClient(CIO){
+        install(ContentNegotiation) {
+            json(contentType = ContentType.Any)
         }
     }
     suspend fun accountExists(account: Account, url: String){
