@@ -16,10 +16,6 @@ class logInConroller {
         }
     }
     suspend fun accountExists(account: Account, url: String){
-        val response: HttpResponse = client.post(url)
-        {
-            contentType(ContentType.Application.Json)
-            setBody(account)
-        }
+        val response: HttpResponse = client.get(url + "/${account.email}/${account.password}")
     }
 }
