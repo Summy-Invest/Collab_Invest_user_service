@@ -11,16 +11,16 @@ import java.lang.Exception
 
 class LogInController {
     suspend fun accountExists(account: Account, url: String): AuthenticatedUser {
-        val client = HttpClientFactory.createHttpClient()
-        val response: HttpResponse = client.get("$url/userService/user/authenticateUser/${account.email}/${account.password}")
-        client.close()
-        when (response.status) {
-            HttpStatusCode.OK -> {
-                return response.body<AuthenticatedUser>()
-            }
+        HttpClientFactory.createHttpClient().use { client ->
+            val response: HttpResponse = client.get("$url/userService/user/authenticateUser/${account.email}/${account.password}")
+            when (response.status) {
+                HttpStatusCode.OK -> {
+                    return response.body<AuthenticatedUser>()
+                }
 
-            else -> {
-                throw Exception("Incorrect password or email")
+                else -> {
+                    throw Exception("Incorrect password or email")
+                }
             }
         }
     }

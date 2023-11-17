@@ -11,18 +11,19 @@ import java.lang.Exception
 
 class SignUpController {
     suspend fun createAccount(url: String, account: Account): AuthenticatedUser{
-        val client = HttpClientFactory.createHttpClient()
-        val response: HttpResponse = client.post("$url/userService/user/saveUser"){
-            contentType(ContentType.Application.Json)
-            setBody(account)
-        }
-        when (response.status){
-            HttpStatusCode.OK -> {
-                return response.body<AuthenticatedUser>()
+        HttpClientFactory.createHttpClient().use { client ->
+            val response: HttpResponse = client.post("$url/userService/user/saveUser"){
+                contentType(ContentType.Application.Json)
+                setBody(account)
             }
+            when (response.status){
+                HttpStatusCode.OK -> {
+                    return response.body<AuthenticatedUser>()
+                }
 
-            else -> {
-                throw Exception("Account is already created")
+                else -> {
+                    throw Exception("Account is already created")
+                }
             }
         }
     }
