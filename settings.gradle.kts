@@ -1,1 +1,1 @@
-rootProject.name = "Collab_Invest_user_service"
+rootProject.name = "Collect_Invest_User_service"
