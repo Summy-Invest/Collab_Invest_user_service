@@ -1,6 +1,7 @@
 package com.collect.invest.routes
 
 import com.collect.invest.controllers.LogInController
+import com.collect.invest.controllers.SignUpController
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -15,6 +16,8 @@ fun Application.configureRouting() {
     val emailValid = EmailValidator()
     val passwordValid = PasswordValidator()
     val logInController = LogInController()
+    val signUpController = SignUpController()
+    val url = "http://localhost:8080"
 
     routing {
         post("/signUp") {
@@ -36,6 +39,7 @@ fun Application.configureRouting() {
                     contentType = ContentType.Application.Json,
                     status = HttpStatusCode.OK
                 )
+                signUpController.createAccount(url, user)
             }
         }
         get("/logIn/{email}/{password}") {
@@ -47,7 +51,7 @@ fun Application.configureRouting() {
             }
             else {
                 try {
-                    val response = logInController.accountExists(account, "http://localhost:8080")
+                    val response = logInController.accountExists(account, url)
                     call.respondText(text = Json.encodeToString(response),
                         contentType = ContentType.Application.Json,
                         status = HttpStatusCode.OK)

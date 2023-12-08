@@ -9,6 +9,9 @@ import io.ktor.http.*
 import io.ktor.client.statement.HttpResponse
 import java.lang.Exception
 
+/**
+ * Подключается к DB service и передает данные авторизации
+ */
 class LogInController {
     suspend fun accountExists(account: Account, url: String): AuthenticatedUser {
         HttpClientFactory.createHttpClient().use { client ->
