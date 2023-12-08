@@ -24,6 +24,6 @@ fun Application.module() {
         json(contentType = ContentType.Any)
     }
     configureSwagger()
-    configureSockets()
+//    configureSockets()
     configureRouting()
 }

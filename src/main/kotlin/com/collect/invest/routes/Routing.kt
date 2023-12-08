@@ -35,11 +35,11 @@ fun Application.configureRouting() {
                 )
             }
             else {
-                call.respondText(text = Json.encodeToString(Message("User is signed up")),
+                call.respondText(text = Json.encodeToString(signUpController.createAccount(url, user)),
                     contentType = ContentType.Application.Json,
                     status = HttpStatusCode.OK
                 )
-                signUpController.createAccount(url, user)
+
             }
         }
         get("/logIn/{email}/{password}") {
