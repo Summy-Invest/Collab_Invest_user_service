@@ -1,7 +1,6 @@
 package com.collect.invest
 
 import com.collect.invest.routes.configureRouting
-import com.collect.invest.routes.configureSockets
 import com.collect.invest.routes.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
