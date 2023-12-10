@@ -35,11 +35,18 @@ fun Application.configureRouting() {
                 )
             }
             else {
-                call.respondText(text = Json.encodeToString(signUpController.createAccount(url, user)),
-                    contentType = ContentType.Application.Json,
-                    status = HttpStatusCode.OK
-                )
-
+                try {
+                    val response = signUpController.createAccount(url, user)
+                    call.respondText(text = Json.encodeToString(response),
+                        contentType = ContentType.Application.Json,
+                        status = HttpStatusCode.OK
+                    )
+                }
+                catch (e: Throwable){
+                    call.respondText(text = Json.encodeToString(Message(e.message.toString())),
+                        contentType = ContentType.Application.Json,
+                        status = HttpStatusCode.Unauthorized)
+                }
             }
         }
         get("/logIn/{email}/{password}") {
