@@ -50,15 +50,21 @@ fun Application.configureRouting() {
             }
         }
         get("/logIn/{email}/{password}") {
-            val account = Account(email = call.parameters["email"]!!, password = call.parameters["password"]!!)
-            if (!passwordValid.validate(account.password)) {
+            val email = call.parameters["email"]!!.toString()
+            val password = call.parameters["password"]!!.toString()
+            if (!passwordValid.validate(password)) {
                 call.respondText(text = Json.encodeToString(Message("Incorrect password")),
+                    contentType = ContentType.Application.Json,
+                    status = HttpStatusCode.Unauthorized)
+            }
+            if (!emailValid.validate(email)) {
+                call.respondText(text = Json.encodeToString(Message("Incorrect email")),
                     contentType = ContentType.Application.Json,
                     status = HttpStatusCode.Unauthorized)
             }
             else {
                 try {
-                    val response = logInController.accountExists(account, url)
+                    val response = logInController.accountExists(email, password, url)
                     call.respondText(text = Json.encodeToString(response),
                         contentType = ContentType.Application.Json,
                         status = HttpStatusCode.OK)
