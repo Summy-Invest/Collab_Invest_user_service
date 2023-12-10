@@ -10,9 +10,17 @@ import io.ktor.client.statement.HttpResponse
 import java.lang.Exception
 
 /**
- * Подключается к DB service и передает данные авторизации
+ * Controller class for handling login functionality.
  */
 class LogInController {
+    /**
+     * Checks if an account exists by sending a request to the specified URL with the provided account credentials.
+     *
+     * @param account The account object containing the email and password.
+     * @param url The URL to send the request to.
+     * @return An AuthenticatedUser object if the account exists and the credentials are correct.
+     * @throws Exception if the response status is not [HttpStatusCode.OK].
+     */
     suspend fun accountExists(account: Account, url: String): AuthenticatedUser {
         HttpClientFactory.createHttpClient().use { client ->
             val response: HttpResponse = client.get("$url/userService/user/authenticateUser/${account.email}/${account.password}")
