@@ -24,16 +24,15 @@ class LogInController {
      * @throws Exception if the authentication fails or the response status is not [HttpStatusCode.OK].
      */
     suspend fun accountExists(email: String, password: String, url: String): AuthenticatedUser {
-        HttpClientFactory.createHttpClient().use { client ->
-            val response: HttpResponse = client.get("$url/userService/user/authenticateUser/${email}/${password}")
-            when (response.status) {
-                HttpStatusCode.OK -> {
-                    return response.body<AuthenticatedUser>()
-                }
+    val client = HttpClientFactory.client
+        val response: HttpResponse = client.get("$url/userService/user/authenticateUser/${email}/${password}")
+        when (response.status) {
+            HttpStatusCode.OK -> {
+                return response.body<AuthenticatedUser>()
+            }
 
-                else -> {
-                    throw Exception("Incorrect password or email")
-                }
+            else -> {
+                throw Exception("Incorrect password or email")
             }
         }
     }

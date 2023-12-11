@@ -23,19 +23,18 @@ class SignUpController {
      * @throws Exception if the response status is not [HttpStatusCode.OK].
      */
     suspend fun createAccount(url: String, user: User): AuthenticatedUser{
-        HttpClientFactory.createHttpClient().use { client ->
-            val response: HttpResponse = client.post("$url/userService/user/saveUser"){
-                contentType(ContentType.Application.Json)
-                setBody(user)
+        val client = HttpClientFactory.client
+        val response: HttpResponse = client.post("$url/userService/user/saveUser"){
+            contentType(ContentType.Application.Json)
+            setBody(user)
+        }
+        when (response.status){
+            HttpStatusCode.OK -> {
+                return response.body<AuthenticatedUser>()
             }
-            when (response.status){
-                HttpStatusCode.OK -> {
-                    return response.body<AuthenticatedUser>()
-                }
 
-                else -> {
-                    throw Exception("Account is already created")
-                }
+            else -> {
+                throw Exception("Account is already created")
             }
         }
     }
