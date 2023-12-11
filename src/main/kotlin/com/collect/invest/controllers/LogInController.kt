@@ -1,7 +1,7 @@
 package com.collect.invest.controllers
 
 import com.collect.invest.entities.AuthenticatedUser
-import com.collect.invest.utils.HttpClientFactory
+import com.collect.invest.utils.HttpClientSingleton
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -24,7 +24,7 @@ class LogInController {
      * @throws Exception if the authentication fails or the response status is not [HttpStatusCode.OK].
      */
     suspend fun accountExists(email: String, password: String, url: String): AuthenticatedUser {
-    val client = HttpClientFactory.client
+    val client = HttpClientSingleton.client
         val response: HttpResponse = client.get("$url/userService/user/authenticateUser/${email}/${password}")
         when (response.status) {
             HttpStatusCode.OK -> {

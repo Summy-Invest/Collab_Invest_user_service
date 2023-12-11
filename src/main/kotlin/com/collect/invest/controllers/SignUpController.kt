@@ -3,7 +3,7 @@ package com.collect.invest.controllers
 
 import com.collect.invest.entities.AuthenticatedUser
 import com.collect.invest.entities.User
-import com.collect.invest.utils.HttpClientFactory
+import com.collect.invest.utils.HttpClientSingleton
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
@@ -23,7 +23,7 @@ class SignUpController {
      * @throws Exception if the response status is not [HttpStatusCode.OK].
      */
     suspend fun createAccount(url: String, user: User): AuthenticatedUser{
-        val client = HttpClientFactory.client
+        val client = HttpClientSingleton.client
         val response: HttpResponse = client.post("$url/userService/user/saveUser"){
             contentType(ContentType.Application.Json)
             setBody(user)
