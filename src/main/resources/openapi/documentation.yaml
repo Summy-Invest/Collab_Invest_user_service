@@ -4,7 +4,7 @@ info:
   description: "Collect_Invest_User_service API"
   version: "1.0.0"
 servers:
-- url: "https://Collect_Invest_User_service"
+- url: "http://localhost:9999"
 paths:
   /ws:
     get:

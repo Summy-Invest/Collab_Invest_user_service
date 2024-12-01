@@ -17,7 +17,7 @@ fun Application.configureRouting() {
     val passwordValid = PasswordValidator()
     val logInController = LogInController()
     val signUpController = SignUpController()
-    val url = "http://localhost:8080"
+    val url = "http://db-service:8080"
 
     routing {
         post("/signUp") {
